@@ -98,12 +98,22 @@ function AnnuaireContent() {
             incub<span className="text-accent-green">.</span>match
           </span>
         </Link>
-        <Link
-          href="/quiz"
-          className="rounded-lg bg-accent-green px-4 py-2 text-[13px] font-bold text-bg-base transition-all hover:bg-accent-green-hover"
-        >
-          Faire le matching →
-        </Link>
+        <div className="flex items-center gap-3">
+          <a
+            href="https://kemil.fr/book"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[13px] font-medium text-text-secondary hover:text-text-primary transition-colors hidden sm:block"
+          >
+            Me faire accompagner
+          </a>
+          <Link
+            href="/quiz"
+            className="rounded-lg bg-accent-green px-4 py-2 text-[13px] font-bold text-bg-base transition-all hover:bg-accent-green-hover"
+          >
+            Faire le matching →
+          </Link>
+        </div>
       </header>
 
       {/* Dynamic header */}

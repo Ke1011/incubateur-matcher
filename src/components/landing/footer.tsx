@@ -14,8 +14,13 @@ export function Footer() {
           </a>
         </span>
         <div className="flex gap-4 text-[13px] text-text-muted">
-          <a href="mailto:contact@kemil.fr" className="hover:text-text-secondary transition-colors">
-            Contact
+          <a
+            href="https://kemil.fr/book"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-text-secondary transition-colors"
+          >
+            Me faire accompagner
           </a>
         </div>
       </div>
