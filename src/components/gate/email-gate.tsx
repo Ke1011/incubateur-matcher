@@ -35,7 +35,9 @@ export function EmailGate({ variant = "quiz" }: EmailGateProps) {
     email: "",
     linkedin: "",
     profil: "",
+    profilAutre: "",
     stade: "",
+    stadeAutre: "",
   })
   const [isLoading, setIsLoading] = useState(false)
   const [shaking, setShaking] = useState(false)
@@ -45,7 +47,9 @@ export function EmailGate({ variant = "quiz" }: EmailGateProps) {
     setTimeout(() => setShaking(false), 200)
   }, [])
 
-  const isValid = form.prenom && form.email.includes("@") && form.profil && form.stade
+  const profilComplete = form.profil && (form.profil !== "Autre (préciser)" || form.profilAutre)
+  const stadeComplete = form.stade && (form.stade !== "Autre (préciser)" || form.stadeAutre)
+  const isValid = form.prenom && form.email.includes("@") && profilComplete && stadeComplete
 
   const handleSubmit = useCallback(
     async (e: React.FormEvent) => {
@@ -63,8 +67,8 @@ export function EmailGate({ variant = "quiz" }: EmailGateProps) {
             prenom: form.prenom,
             email: form.email,
             linkedin: form.linkedin,
-            profil: form.profil,
-            stade: form.stade,
+            profil: form.profil === "Autre (préciser)" ? `Autre: ${form.profilAutre}` : form.profil,
+            stade: form.stade === "Autre (préciser)" ? `Autre: ${form.stadeAutre}` : form.stade,
             source: variant,
           }),
         })
@@ -173,6 +177,18 @@ export function EmailGate({ variant = "quiz" }: EmailGateProps) {
             ))}
           </select>
 
+          {/* Profil — champ texte si "Autre" */}
+          {form.profil === "Autre (préciser)" && (
+            <input
+              type="text"
+              value={form.profilAutre}
+              onChange={(e) => setForm((f) => ({ ...f, profilAutre: e.target.value }))}
+              placeholder="Précisez votre profil..."
+              required
+              className="h-11 w-full rounded-lg border-[1.5px] border-accent-green/30 bg-bg-subtle px-4 text-[14px] text-text-primary placeholder-text-muted outline-none transition-all focus:border-accent-green focus:shadow-[0_0_0_3px_rgba(34,197,94,0.15)] animate-fade-in"
+            />
+          )}
+
           {/* Stade */}
           <select
             value={form.stade}
@@ -191,6 +207,18 @@ export function EmailGate({ variant = "quiz" }: EmailGateProps) {
               </option>
             ))}
           </select>
+
+          {/* Stade — champ texte si "Autre" */}
+          {form.stade === "Autre (préciser)" && (
+            <input
+              type="text"
+              value={form.stadeAutre}
+              onChange={(e) => setForm((f) => ({ ...f, stadeAutre: e.target.value }))}
+              placeholder="Précisez votre stade..."
+              required
+              className="h-11 w-full rounded-lg border-[1.5px] border-accent-green/30 bg-bg-subtle px-4 text-[14px] text-text-primary placeholder-text-muted outline-none transition-all focus:border-accent-green focus:shadow-[0_0_0_3px_rgba(34,197,94,0.15)] animate-fade-in"
+            />
+          )}
 
           {/* Submit */}
           <button
