@@ -9,18 +9,23 @@ interface EmailGateProps {
 }
 
 const PROFIL_OPTIONS = [
-  "Ex-CDI cadre+ (conseil, finance, corporate)",
+  "Salarié.e, je réfléchis à lancer ma startup",
+  "Ex-CDI, j'ai quitté mon job pour lancer ma startup",
   "Étudiant / Jeune diplômé",
-  "Serial entrepreneur",
-  "En poste — side project",
-  "Autre",
+  "Serial Entrepreneur",
+  "VC / Investisseur",
+  "Autre (préciser)",
 ]
 
 const STADE_OPTIONS = [
-  "J'ai une idée",
-  "J'ai un MVP",
-  "J'ai mes premiers clients",
-  "Je cherche à accélérer",
+  "Je cherche une idée",
+  "💡 J'ai une idée (ou plusieurs) mais j'ai rien fait concrètement",
+  "🔍 J'ai commencé à parler à ma cible (faire du discovery)",
+  "✅ J'ai validé mon discovery, mais pas encore de MVP",
+  "🛠️ Je suis en train de construire mon MVP",
+  "🚀 J'ai un MVP, je cherche mes premiers clients",
+  "💰 J'ai déjà des clients / du revenu",
+  "Autre (préciser)",
 ]
 
 export function EmailGate({ variant = "quiz" }: EmailGateProps) {
