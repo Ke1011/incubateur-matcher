@@ -30,20 +30,31 @@ function AnnuaireContent() {
     })
   }, [])
 
-  // Trigger gate on scroll
+  // Trigger gate: 20% scroll OR 5 seconds — whichever comes first
   useEffect(() => {
     if (isUnlocked) return
 
-    const handleScroll = () => {
-      const scrollPercent = window.scrollY / (document.body.scrollHeight - window.innerHeight)
-      if (scrollPercent > 0.4) {
-        setShowGate(true)
-        window.removeEventListener("scroll", handleScroll)
-      }
+    let triggered = false
+    const trigger = () => {
+      if (triggered) return
+      triggered = true
+      setShowGate(true)
+      window.removeEventListener("scroll", handleScroll)
+      clearTimeout(timer)
     }
 
+    const handleScroll = () => {
+      const scrollPercent = window.scrollY / (document.body.scrollHeight - window.innerHeight)
+      if (scrollPercent > 0.2) trigger()
+    }
+
+    const timer = setTimeout(trigger, 5000)
+
     window.addEventListener("scroll", handleScroll, { passive: true })
-    return () => window.removeEventListener("scroll", handleScroll)
+    return () => {
+      window.removeEventListener("scroll", handleScroll)
+      clearTimeout(timer)
+    }
   }, [isUnlocked, setShowGate])
 
   const activeCategory = categories.find((c) => c.id === activeTab) || categories[0]
