@@ -84,6 +84,14 @@ export function EmailGate({ variant = "quiz" }: EmailGateProps) {
         // Silent fail — don't block the user
       }
 
+      // Save gate answers for quiz pre-fill
+      if (form.stade && form.stade !== "Autre (préciser)") {
+        localStorage.setItem("incub_match_gate_stade", form.stade)
+      }
+      if (form.profil && form.profil !== "Autre (préciser)") {
+        localStorage.setItem("incub_match_gate_profil", form.profil)
+      }
+
       unlock(form.email)
       setIsLoading(false)
     },
