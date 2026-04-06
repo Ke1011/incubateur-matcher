@@ -47,7 +47,24 @@ export function EmailGate({ variant = "quiz" }: EmailGateProps) {
       if (!isValid) return
 
       setIsLoading(true)
-      await new Promise((resolve) => setTimeout(resolve, 500))
+
+      // Send lead data to API
+      try {
+        await fetch("/api/lead", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            prenom: form.prenom,
+            email: form.email,
+            profil: form.profil,
+            stade: form.stade,
+            source: variant,
+          }),
+        })
+      } catch {
+        // Silent fail — don't block the user
+      }
+
       unlock(form.email)
       setIsLoading(false)
     },

@@ -3,7 +3,7 @@ import type { Incubator } from "./types"
 import { FALLBACK_DATA } from "./fallback-data"
 
 const SHEET_CSV_URL =
-  "https://docs.google.com/spreadsheets/d/1fxCg9P0tjIVeJByas0YFZeRYk7ErLCy_PtXnmiBZ7Ig/gviz/tq?tqx=out:csv"
+  "https://docs.google.com/spreadsheets/d/1fxCg9P0tjIVeJByas0YFZeRYk7ErLCy_PtXnmiBZ7Ig/export?format=csv&gid=730944987"
 
 const CACHE_KEY = "incub_match_data"
 const CACHE_TTL = 5 * 60 * 1000 // 5 min
