@@ -20,6 +20,14 @@ export default function Home() {
           >
             Annuaire
           </Link>
+          <a
+            href="https://kemil.fr/book"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[13px] font-medium text-text-secondary hover:text-text-primary transition-colors hidden sm:block"
+          >
+            Me faire accompagner
+          </a>
           <Button href="/quiz" className="text-[13px] h-9 px-4">
             Faire le matching →
           </Button>
