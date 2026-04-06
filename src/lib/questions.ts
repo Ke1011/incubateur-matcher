@@ -5,10 +5,13 @@ export const questions: Question[] = [
     id: "stade",
     question: "Où en êtes-vous avec votre projet ?",
     options: [
-      { value: "Idéation", label: "J'ai une idée, je cherche à valider", icon: "💡" },
-      { value: "Pré-seed", label: "J'ai un MVP / premiers tests", icon: "🔧" },
-      { value: "Seed", label: "J'ai mes premiers clients", icon: "🌱" },
-      { value: "Growth", label: "Je cherche à accélérer / lever", icon: "🚀" },
+      { value: "Idéation", label: "Je cherche une idée", icon: "🤔" },
+      { value: "Idéation", label: "J'ai une idée mais j'ai rien fait concrètement", icon: "💡" },
+      { value: "Pré-seed", label: "J'ai commencé à parler à ma cible (discovery)", icon: "🔍" },
+      { value: "Pré-seed", label: "J'ai validé mon discovery, pas encore de MVP", icon: "✅" },
+      { value: "Seed", label: "Je suis en train de construire mon MVP", icon: "🛠️" },
+      { value: "Seed", label: "J'ai un MVP, je cherche mes premiers clients", icon: "🚀" },
+      { value: "Growth", label: "J'ai déjà des clients / du revenu", icon: "💰" },
     ],
   },
   {
