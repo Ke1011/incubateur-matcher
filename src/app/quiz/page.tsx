@@ -26,29 +26,13 @@ function LoadingAnimation() {
 function ResultsView({ results }: { results: ScoredIncubator[] }) {
   const { isUnlocked, setShowGate } = useGateContext()
 
-  // Gate is mandatory before showing results
+  // Show results first (card 1 visible, 2-5 blurred), then trigger gate after 2s
   useEffect(() => {
     if (!isUnlocked) {
-      setShowGate(true)
+      const timer = setTimeout(() => setShowGate(true), 2000)
+      return () => clearTimeout(timer)
     }
   }, [isUnlocked, setShowGate])
-
-  // Don't show results until unlocked
-  if (!isUnlocked) {
-    return (
-      <div className="min-h-screen bg-bg-base flex items-center justify-center px-5">
-        <div className="text-center animate-fade-in-up">
-          <h1 className="mb-2 text-2xl font-extrabold text-text-primary">
-            Vos résultats sont prêts !
-          </h1>
-          <p className="text-[13px] text-text-secondary">
-            Remplissez le formulaire pour accéder à votre top 5 personnalisé.
-          </p>
-        </div>
-        <EmailGate variant="quiz" />
-      </div>
-    )
-  }
 
   return (
     <div className="min-h-screen bg-bg-base px-5 py-12">
@@ -120,6 +104,7 @@ export default function QuizPage() {
     >
       <QuestionCard
         question={quiz.currentQuestion}
+        questionNumber={quiz.currentStep + 1}
         selected={quiz.answers[quiz.currentQuestion.id]}
         onSelect={(value) => quiz.answer(quiz.currentQuestion.id, value)}
         direction={quiz.direction}

@@ -42,6 +42,21 @@ export function IncubatorCard({ incubator, rank, blurred, onUnlock, delay = 0 }:
         <ScoreBadge percent={incubator.matchPercent} rank={rank} />
       </div>
 
+      {/* Score explanation */}
+      {!blurred && (
+        <p className="mb-3 text-[11px] text-text-muted">
+          Match basé sur{" "}
+          {[
+            incubator.stadeAccepte.length > 0 && "stade",
+            incubator.secteur && "secteur",
+            incubator.region && "localisation",
+            incubator.avantages.length > 0 && "avantages",
+          ]
+            .filter(Boolean)
+            .join(", ")}
+        </p>
+      )}
+
       {/* Tags */}
       <div className="mb-3 flex flex-wrap gap-1.5">
         {incubator.typeStructure && <Badge label={incubator.typeStructure} />}

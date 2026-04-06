@@ -1,16 +1,17 @@
 "use client"
 
 import { OptionButton } from "./option-button"
-import type { Question, UserAnswers } from "@/lib/types"
+import type { Question } from "@/lib/types"
 
 interface QuestionCardProps {
   question: Question
+  questionNumber: number
   selected: string | undefined
   onSelect: (value: string) => void
   direction: "forward" | "backward"
 }
 
-export function QuestionCard({ question, selected, onSelect, direction }: QuestionCardProps) {
+export function QuestionCard({ question, questionNumber, selected, onSelect, direction }: QuestionCardProps) {
   return (
     <div
       key={question.id}
@@ -18,7 +19,7 @@ export function QuestionCard({ question, selected, onSelect, direction }: Questi
     >
       {/* Question number */}
       <p className="mb-3 text-[13px] font-semibold text-accent-green">
-        Question {question.id === "stade" ? "1" : ""}
+        Question {questionNumber}
       </p>
 
       {/* Question text */}
@@ -33,10 +34,10 @@ export function QuestionCard({ question, selected, onSelect, direction }: Questi
       {!question.subtitle && <div className="mb-8" />}
 
       {/* Options */}
-      <div className="space-y-4">
+      <div className="space-y-3">
         {question.options.map((opt) => (
           <OptionButton
-            key={opt.value}
+            key={opt.value + opt.label}
             label={opt.label}
             icon={opt.icon}
             selected={selected === opt.value}

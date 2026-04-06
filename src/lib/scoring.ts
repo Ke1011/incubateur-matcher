@@ -63,15 +63,34 @@ export function scoreIncubator(inc: Incubator, answers: UserAnswers): ScoredIncu
     }
   }
 
-  // Profil founder — 20 pts
-  if (inc.profilFounder.length > 0) {
-    const profilMap: Record<string, string[]> = {
-      Corporate: ["Tous", "Salarié"],
-      Conseil: ["Tous", "Salarié"],
-      Startup: ["Tous", "Serial-founder"],
-      Autre: ["Tous"],
+  // Blocage / Profil — 20 pts
+  // Q7 "blocage" maps to incubator advantages
+  const BLOCAGE_KEYWORDS: Record<string, string[]> = {
+    Validation: ["Mentorat", "Réseau", "Coaching"],
+    Build: ["Bureau", "Crédits cloud", "Tech"],
+    Clients: ["Réseau", "Mentorat", "Financement"],
+    Financement: ["Financement", "Subvention", "Bourse", "Prêt"],
+    Aucun: [],
+  }
+  if (answers.profil === "Aucun") {
+    score += 10 // neutral
+  } else {
+    const blocageKw = BLOCAGE_KEYWORDS[answers.profil] || []
+    if (blocageKw.length > 0 && inc.avantages.length > 0) {
+      const avStr = inc.avantages.join(" ")
+      if (containsAny(avStr, blocageKw)) {
+        score += 20
+      } else {
+        score += 5
+      }
+    } else {
+      score += 10
     }
-    const acceptable = profilMap[answers.profil] || ["Tous"]
+  }
+
+  // Profil founder compatibility (bonus from incubator data)
+  if (inc.profilFounder.length > 0) {
+    const acceptable = ["Tous", "Salarié"]
     if (inc.profilFounder.some((p) => acceptable.includes(p))) {
       score += 20
     }
@@ -91,14 +110,13 @@ export function scoreIncubator(inc: Incubator, answers: UserAnswers): ScoredIncu
   }
 
   // Tech / Non-tech — 10 pts
-  const techMap: Record<string, string[]> = {
+  const acceptedTech: Record<string, string[]> = {
     Tech: ["Tech", "Les deux"],
     "Non-tech": ["Non-tech", "Les deux"],
     "Les deux": ["Tech", "Non-tech", "Les deux"],
   }
-  if (!inc.techNonTech || inc.techNonTech === "Les deux") {
-    score += 10
-  } else if (techMap["Les deux"]?.includes(inc.techNonTech)) {
+  const userTechPref = acceptedTech["Les deux"] // quiz doesn't ask tech/non-tech, default accept all
+  if (!inc.techNonTech || userTechPref.includes(inc.techNonTech)) {
     score += 10
   }
 

@@ -1,7 +1,7 @@
 "use client"
 
-import { useState, useCallback } from "react"
-import { Lock, Check } from "lucide-react"
+import { useState, useCallback, useEffect } from "react"
+import { Lock, Check, ChevronDown } from "lucide-react"
 import { useGateContext } from "./gate-provider"
 
 interface EmailGateProps {
@@ -41,6 +41,14 @@ export function EmailGate({ variant = "quiz" }: EmailGateProps) {
   })
   const [isLoading, setIsLoading] = useState(false)
   const [shaking, setShaking] = useState(false)
+
+  // Lock body scroll when gate is open (fix iOS Safari scroll-behind)
+  useEffect(() => {
+    if (showGate) {
+      document.body.style.overflow = "hidden"
+      return () => { document.body.style.overflow = "" }
+    }
+  }, [showGate])
 
   const handleBackdropClick = useCallback(() => {
     setShaking(true)
@@ -159,23 +167,26 @@ export function EmailGate({ variant = "quiz" }: EmailGateProps) {
           />
 
           {/* Profil */}
-          <select
-            value={form.profil}
-            onChange={(e) => setForm((f) => ({ ...f, profil: e.target.value }))}
-            required
-            className={`h-11 w-full rounded-lg border-[1.5px] border-bg-border bg-bg-subtle px-4 text-[14px] outline-none transition-all focus:border-accent-green appearance-none cursor-pointer ${
-              form.profil ? "text-text-primary" : "text-text-muted"
-            }`}
-          >
-            <option value="" disabled>
-              Votre profil
-            </option>
-            {PROFIL_OPTIONS.map((opt) => (
-              <option key={opt} value={opt}>
-                {opt}
+          <div className="relative">
+            <select
+              value={form.profil}
+              onChange={(e) => setForm((f) => ({ ...f, profil: e.target.value }))}
+              required
+              className={`h-11 w-full rounded-lg border-[1.5px] border-bg-border bg-bg-subtle px-4 pr-10 text-[14px] outline-none transition-all focus:border-accent-green appearance-none cursor-pointer ${
+                form.profil ? "text-text-primary" : "text-text-muted"
+              }`}
+            >
+              <option value="" disabled>
+                Votre profil
               </option>
-            ))}
-          </select>
+              {PROFIL_OPTIONS.map((opt) => (
+                <option key={opt} value={opt}>
+                  {opt}
+                </option>
+              ))}
+            </select>
+            <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-text-muted pointer-events-none" />
+          </div>
 
           {/* Profil — champ texte si "Autre" */}
           {form.profil === "Autre (préciser)" && (
@@ -190,23 +201,26 @@ export function EmailGate({ variant = "quiz" }: EmailGateProps) {
           )}
 
           {/* Stade */}
-          <select
-            value={form.stade}
-            onChange={(e) => setForm((f) => ({ ...f, stade: e.target.value }))}
-            required
-            className={`h-11 w-full rounded-lg border-[1.5px] border-bg-border bg-bg-subtle px-4 text-[14px] outline-none transition-all focus:border-accent-green appearance-none cursor-pointer ${
-              form.stade ? "text-text-primary" : "text-text-muted"
-            }`}
-          >
-            <option value="" disabled>
-              Stade de votre projet
-            </option>
-            {STADE_OPTIONS.map((opt) => (
-              <option key={opt} value={opt}>
-                {opt}
+          <div className="relative">
+            <select
+              value={form.stade}
+              onChange={(e) => setForm((f) => ({ ...f, stade: e.target.value }))}
+              required
+              className={`h-11 w-full rounded-lg border-[1.5px] border-bg-border bg-bg-subtle px-4 pr-10 text-[14px] outline-none transition-all focus:border-accent-green appearance-none cursor-pointer ${
+                form.stade ? "text-text-primary" : "text-text-muted"
+              }`}
+            >
+              <option value="" disabled>
+                Stade de votre projet
               </option>
-            ))}
-          </select>
+              {STADE_OPTIONS.map((opt) => (
+                <option key={opt} value={opt}>
+                  {opt}
+                </option>
+              ))}
+            </select>
+            <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-text-muted pointer-events-none" />
+          </div>
 
           {/* Stade — champ texte si "Autre" */}
           {form.stade === "Autre (préciser)" && (

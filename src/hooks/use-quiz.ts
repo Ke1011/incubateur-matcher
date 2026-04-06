@@ -19,45 +19,39 @@ export function useQuiz() {
     isComplete: false,
   })
 
-  const answer = useCallback(
-    (key: keyof UserAnswers, value: string) => {
-      setState((prev) => {
-        const newAnswers = { ...prev.answers, [key]: value }
-        const isLast = prev.currentStep === questions.length - 1
+  const answer = useCallback((key: keyof UserAnswers, value: string) => {
+    setState((prev) => {
+      const newAnswers = { ...prev.answers, [key]: value }
+      const isLast = prev.currentStep === questions.length - 1
 
-        if (isLast) {
-          // Save to sessionStorage
-          sessionStorage.setItem("quiz_answers", JSON.stringify(newAnswers))
-          return { ...prev, answers: newAnswers, isComplete: true }
-        }
-
-        // Auto-advance after brief delay
-        return { ...prev, answers: newAnswers }
-      })
-
-      // Auto-advance (non-last question)
-      if (state.currentStep < questions.length - 1) {
-        setTimeout(() => {
-          setState((prev) => ({
-            ...prev,
-            direction: "forward",
-            currentStep: prev.currentStep + 1,
-          }))
-        }, 120)
+      if (isLast) {
+        sessionStorage.setItem("quiz_answers", JSON.stringify(newAnswers))
+        return { ...prev, answers: newAnswers, isComplete: true }
       }
-    },
-    [state.currentStep]
-  )
+
+      // Auto-advance after brief delay (scheduled inside setState to avoid stale closure)
+      setTimeout(() => {
+        setState((s) => ({
+          ...s,
+          direction: "forward",
+          currentStep: s.currentStep + 1,
+        }))
+      }, 120)
+
+      return { ...prev, answers: newAnswers }
+    })
+  }, [])
 
   const goBack = useCallback(() => {
-    if (state.currentStep > 0) {
-      setState((prev) => ({
+    setState((prev) => {
+      if (prev.currentStep <= 0) return prev
+      return {
         ...prev,
         direction: "backward",
         currentStep: prev.currentStep - 1,
-      }))
-    }
-  }, [state.currentStep])
+      }
+    })
+  }, [])
 
   const reset = useCallback(() => {
     setState({
