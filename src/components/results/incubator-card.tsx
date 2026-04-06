@@ -1,9 +1,19 @@
 "use client"
 
+import Link from "next/link"
 import { ExternalLink, Link2, MapPin } from "lucide-react"
 import type { ScoredIncubator } from "@/lib/types"
 import { Badge } from "@/components/shared/badge"
 import { ScoreBadge } from "./score-badge"
+
+function slugify(name: string): string {
+  return name
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "")
+}
 
 interface IncubatorCardProps {
   incubator: ScoredIncubator
@@ -30,7 +40,9 @@ export function IncubatorCard({ incubator, rank, blurred, onUnlock, delay = 0 }:
             {incubator.nom.charAt(0)}
           </div>
           <div>
-            <h3 className="text-base font-bold text-text-primary">{incubator.nom}</h3>
+            <Link href={`/incubateur/${slugify(incubator.nom)}`} className="text-base font-bold text-text-primary hover:text-accent-green transition-colors">
+              {incubator.nom}
+            </Link>
             <div className="flex items-center gap-1.5 text-[13px] text-text-secondary">
               <MapPin className="h-3 w-3" />
               {incubator.ville && <span>{incubator.ville}</span>}

@@ -1,8 +1,18 @@
 "use client"
 
+import Link from "next/link"
 import { MapPin, ExternalLink, Link2, Lock } from "lucide-react"
 import type { Incubator } from "@/lib/types"
 import { Badge } from "@/components/shared/badge"
+
+function slugify(name: string): string {
+  return name
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "")
+}
 
 interface IncubatorRowProps {
   incubator: Incubator
@@ -20,7 +30,9 @@ export function IncubatorRow({ incubator, isUnlocked, onUnlock }: IncubatorRowPr
             {incubator.nom.charAt(0)}
           </div>
           <div>
-            <h3 className="text-[15px] font-bold text-text-primary">{incubator.nom}</h3>
+            <Link href={`/incubateur/${slugify(incubator.nom)}`} className="text-[15px] font-bold text-text-primary hover:text-accent-green transition-colors">
+              {incubator.nom}
+            </Link>
             <div className="flex items-center gap-1.5 text-[12px] text-text-secondary">
               <MapPin className="h-3 w-3" />
               {incubator.ville && <span>{incubator.ville}</span>}
