@@ -33,6 +33,7 @@ export function EmailGate({ variant = "quiz" }: EmailGateProps) {
   const [form, setForm] = useState({
     prenom: "",
     email: "",
+    linkedin: "",
     profil: "",
     stade: "",
   })
@@ -61,6 +62,7 @@ export function EmailGate({ variant = "quiz" }: EmailGateProps) {
           body: JSON.stringify({
             prenom: form.prenom,
             email: form.email,
+            linkedin: form.linkedin,
             profil: form.profil,
             stade: form.stade,
             source: variant,
@@ -140,6 +142,15 @@ export function EmailGate({ variant = "quiz" }: EmailGateProps) {
             onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
             placeholder="Email professionnel"
             required
+            className="h-11 w-full rounded-lg border-[1.5px] border-bg-border bg-bg-subtle px-4 text-[14px] text-text-primary placeholder-text-muted outline-none transition-all focus:border-accent-green focus:shadow-[0_0_0_3px_rgba(34,197,94,0.15)]"
+          />
+
+          {/* LinkedIn (optionnel) */}
+          <input
+            type="url"
+            value={form.linkedin}
+            onChange={(e) => setForm((f) => ({ ...f, linkedin: e.target.value }))}
+            placeholder="LinkedIn (optionnel)"
             className="h-11 w-full rounded-lg border-[1.5px] border-bg-border bg-bg-subtle px-4 text-[14px] text-text-primary placeholder-text-muted outline-none transition-all focus:border-accent-green focus:shadow-[0_0_0_3px_rgba(34,197,94,0.15)]"
           />
 

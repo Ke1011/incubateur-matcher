@@ -5,7 +5,7 @@ const GOOGLE_SHEET_WEBHOOK_URL = process.env.LEAD_WEBHOOK_URL || ""
 export async function POST(request: Request) {
   try {
     const body = await request.json()
-    const { prenom, email, profil, stade, source } = body
+    const { prenom, email, linkedin, profil, stade, source } = body
 
     if (!email || !email.includes("@")) {
       return NextResponse.json({ error: "Email invalide" }, { status: 400 })
@@ -19,6 +19,7 @@ export async function POST(request: Request) {
         body: JSON.stringify({
           prenom: prenom || "",
           email,
+          linkedin: linkedin || "",
           profil: profil || "",
           stade: stade || "",
           source: source || "quiz",
