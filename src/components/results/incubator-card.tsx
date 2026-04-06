@@ -20,13 +20,15 @@ interface IncubatorCardProps {
   rank: number
   blurred: boolean
   onUnlock?: () => void
+  onClick?: () => void
   delay?: number
 }
 
-export function IncubatorCard({ incubator, rank, blurred, onUnlock, delay = 0 }: IncubatorCardProps) {
+export function IncubatorCard({ incubator, rank, blurred, onUnlock, onClick, delay = 0 }: IncubatorCardProps) {
   return (
     <div
-      className={`animate-card-enter rounded-[14px] border bg-bg-elevated p-5 md:p-6 transition-all ${
+      onClick={onClick}
+      className={`animate-card-enter rounded-[14px] border bg-bg-elevated p-5 md:p-6 transition-all cursor-pointer ${
         rank === 1
           ? "border-accent-green/20 shadow-[0_0_20px_rgba(34,197,94,0.1)]"
           : "border-bg-border shadow-[0_4px_16px_rgba(0,0,0,0.5)]"

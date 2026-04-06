@@ -1,11 +1,12 @@
 "use client"
 
-import { useState, useEffect, useMemo, Suspense } from "react"
+import { useState, useEffect, useMemo, useCallback, Suspense } from "react"
 import { useGateContext } from "@/components/gate/gate-provider"
 import { DynamicHeader } from "@/components/annuaire/dynamic-header"
 import { TabNav } from "@/components/annuaire/tab-nav"
 import { FilterBar } from "@/components/annuaire/filter-bar"
 import { IncubatorRow } from "@/components/annuaire/incubator-row"
+import { IncubatorModal } from "@/components/shared/incubator-modal"
 import { EmailGate } from "@/components/gate/email-gate"
 import { CtaBanner } from "@/components/shared/cta-banner"
 import { fetchIncubators } from "@/lib/fetch-incubators"
@@ -20,7 +21,16 @@ function AnnuaireContent() {
   const [incubators, setIncubators] = useState<Incubator[]>([])
   const [loading, setLoading] = useState(true)
   const [activeTab, setActiveTab] = useState("tous")
+  const [selectedIncubator, setSelectedIncubator] = useState<Incubator | null>(null)
   const { isUnlocked, setShowGate } = useGateContext()
+
+  const handleCardClick = useCallback((inc: Incubator) => {
+    if (isUnlocked) {
+      setSelectedIncubator(inc)
+    } else {
+      setShowGate(true)
+    }
+  }, [isUnlocked, setShowGate])
   const { filters, search, setFilter, resetFilters } = useFilters()
 
   useEffect(() => {
@@ -147,6 +157,7 @@ function AnnuaireContent() {
                 incubator={inc}
                 isUnlocked={isUnlocked}
                 onUnlock={() => setShowGate(true)}
+                onClick={() => handleCardClick(inc)}
               />
             ))
           )}
@@ -160,6 +171,10 @@ function AnnuaireContent() {
         </div>
       </div>
 
+      <IncubatorModal
+        incubator={selectedIncubator}
+        onClose={() => setSelectedIncubator(null)}
+      />
       <EmailGate variant="annuaire" />
     </div>
   )

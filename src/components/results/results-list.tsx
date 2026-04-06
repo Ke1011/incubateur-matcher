@@ -1,14 +1,15 @@
 "use client"
 
-import type { ScoredIncubator } from "@/lib/types"
+import type { Incubator, ScoredIncubator } from "@/lib/types"
 import { IncubatorCard } from "./incubator-card"
 import { useGateContext } from "@/components/gate/gate-provider"
 
 interface ResultsListProps {
   results: ScoredIncubator[]
+  onCardClick: (inc: Incubator) => void
 }
 
-export function ResultsList({ results }: ResultsListProps) {
+export function ResultsList({ results, onCardClick }: ResultsListProps) {
   const { isUnlocked, setShowGate } = useGateContext()
 
   return (
@@ -20,6 +21,10 @@ export function ResultsList({ results }: ResultsListProps) {
           rank={i + 1}
           blurred={!isUnlocked && i > 0}
           onUnlock={() => setShowGate(true)}
+          onClick={() => {
+            if (isUnlocked || i === 0) onCardClick(inc)
+            else setShowGate(true)
+          }}
           delay={i * 100}
         />
       ))}

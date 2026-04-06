@@ -1,16 +1,17 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { useQuiz } from "@/hooks/use-quiz"
 import { useGateContext } from "@/components/gate/gate-provider"
 import { QuizShell } from "@/components/quiz/quiz-shell"
 import { QuestionCard } from "@/components/quiz/question-card"
 import { ResultsList } from "@/components/results/results-list"
+import { IncubatorModal } from "@/components/shared/incubator-modal"
 import { EmailGate } from "@/components/gate/email-gate"
 import { CtaBanner } from "@/components/shared/cta-banner"
 import { fetchIncubators } from "@/lib/fetch-incubators"
 import { rankIncubators } from "@/lib/scoring"
-import type { ScoredIncubator, UserAnswers } from "@/lib/types"
+import type { Incubator, ScoredIncubator, UserAnswers } from "@/lib/types"
 
 function LoadingAnimation() {
   return (
@@ -25,6 +26,7 @@ function LoadingAnimation() {
 
 function ResultsView({ results }: { results: ScoredIncubator[] }) {
   const { isUnlocked, setShowGate } = useGateContext()
+  const [selectedIncubator, setSelectedIncubator] = useState<Incubator | null>(null)
 
   // Show results first (card 1 visible, 2-5 blurred), then trigger gate after 2s
   useEffect(() => {
@@ -33,6 +35,10 @@ function ResultsView({ results }: { results: ScoredIncubator[] }) {
       return () => clearTimeout(timer)
     }
   }, [isUnlocked, setShowGate])
+
+  const handleCardClick = useCallback((inc: Incubator) => {
+    setSelectedIncubator(inc)
+  }, [])
 
   return (
     <div className="min-h-screen bg-bg-base px-5 py-12">
@@ -48,7 +54,7 @@ function ResultsView({ results }: { results: ScoredIncubator[] }) {
         </div>
 
         {/* Results */}
-        <ResultsList results={results} />
+        <ResultsList results={results} onCardClick={handleCardClick} />
 
         {/* CTA Banner */}
         {isUnlocked && (
@@ -58,6 +64,10 @@ function ResultsView({ results }: { results: ScoredIncubator[] }) {
         )}
       </div>
 
+      <IncubatorModal
+        incubator={selectedIncubator}
+        onClose={() => setSelectedIncubator(null)}
+      />
       <EmailGate variant="quiz" />
     </div>
   )
