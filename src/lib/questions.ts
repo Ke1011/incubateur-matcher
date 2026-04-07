@@ -19,8 +19,13 @@ export const questions: Question[] = [
     question: "Quel est votre secteur principal ?",
     options: [
       { value: "Tech", label: "Tech / IA / SaaS", icon: "💻" },
-      { value: "Santé", label: "Santé / Biotech / Pharma", icon: "🧬" },
+      { value: "DeepTech", label: "DeepTech (hardware, quantique, spatial...)", icon: "🔬" },
+      { value: "Santé", label: "Santé / Biotech / Pharma / Medtech", icon: "🧬" },
+      { value: "Fintech", label: "Fintech / AssurTech", icon: "💳" },
       { value: "Impact", label: "Impact / Greentech / Social", icon: "🌍" },
+      { value: "FoodTech", label: "FoodTech / AgriTech", icon: "🌾" },
+      { value: "Industrie", label: "Industrie / Mobilité / Défense", icon: "🏭" },
+      { value: "Luxe", label: "Luxe / Mode / Beauté", icon: "✨" },
       { value: "Autre", label: "Autre / Généraliste", icon: "📦" },
     ],
   },
@@ -39,12 +44,15 @@ export const questions: Question[] = [
   },
   {
     id: "priorite",
-    question: "Qu'attendez-vous principalement d'un incubateur ?",
+    question: "Qu'attendez-vous d'un incubateur ?",
+    subtitle: "Sélectionnez jusqu'à 2 réponses.",
+    multiSelect: 2,
     options: [
-      { value: "Réseau", label: "Réseau et introductions", icon: "🤝" },
-      { value: "Mentorat", label: "Mentorat et expertise sectorielle", icon: "🧠" },
+      { value: "Réseau", label: "Réseau corpo et introductions", icon: "🤝" },
+      { value: "Mentorat", label: "Mentorat et accompagnement", icon: "🧠" },
       { value: "Financement", label: "Financement et accès aux VCs", icon: "💰" },
-      { value: "Bureau", label: "Espace de travail et opérationnel", icon: "🏢" },
+      { value: "Bureau", label: "Espace de travail", icon: "🏢" },
+      { value: "Autre", label: "Autre (préciser)", icon: "✏️" },
     ],
   },
   {
@@ -75,6 +83,7 @@ export const questions: Question[] = [
       { value: "Clients", label: "Trouver mes premiers clients", icon: "🎯" },
       { value: "Financement", label: "Trouver du financement", icon: "💰" },
       { value: "Aucun", label: "Pas de blocage particulier", icon: "✅" },
+      { value: "Inconnu", label: "Je ne sais pas", icon: "🤷" },
     ],
   },
 ]

@@ -9,6 +9,7 @@ import { ResultsList } from "@/components/results/results-list"
 import { IncubatorModal } from "@/components/shared/incubator-modal"
 import { EmailGate } from "@/components/gate/email-gate"
 import { CtaBanner } from "@/components/shared/cta-banner"
+import { Button } from "@/components/shared/button"
 import { fetchIncubators } from "@/lib/fetch-incubators"
 import { rankIncubators } from "@/lib/scoring"
 import type { Incubator, ScoredIncubator, UserAnswers } from "@/lib/types"
@@ -27,6 +28,7 @@ function LoadingAnimation() {
 function ResultsView({ results }: { results: ScoredIncubator[] }) {
   const { isUnlocked, setShowGate } = useGateContext()
   const [selectedIncubator, setSelectedIncubator] = useState<Incubator | null>(null)
+  const [quizDataSent, setQuizDataSent] = useState(false)
 
   // Show results first (card 1 visible, 2-5 blurred), then trigger gate after 2s
   useEffect(() => {
@@ -35,6 +37,34 @@ function ResultsView({ results }: { results: ScoredIncubator[] }) {
       return () => clearTimeout(timer)
     }
   }, [isUnlocked, setShowGate])
+
+  // Send quiz answers to lead sheet once unlocked
+  useEffect(() => {
+    if (isUnlocked && !quizDataSent) {
+      const answers = sessionStorage.getItem("quiz_answers")
+      if (answers) {
+        fetch("/api/lead", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            prenom: "",
+            email: localStorage.getItem("incub_match_email") || "",
+            linkedin: "",
+            profil: "",
+            stade: "",
+            source: "quiz_answers",
+            quizAnswers: answers,
+          }),
+        }).catch(() => {})
+        setQuizDataSent(true)
+      }
+    }
+  }, [isUnlocked, quizDataSent])
+
+  // Persist results to localStorage
+  useEffect(() => {
+    localStorage.setItem("incub_match_results", JSON.stringify(results.map((r) => r.nom)))
+  }, [results])
 
   const handleCardClick = useCallback((inc: Incubator) => {
     setSelectedIncubator(inc)
@@ -56,10 +86,26 @@ function ResultsView({ results }: { results: ScoredIncubator[] }) {
         {/* Results */}
         <ResultsList results={results} onCardClick={handleCardClick} />
 
-        {/* CTA Banner */}
+        {/* Actions */}
         {isUnlocked && (
-          <div className="mt-10 animate-fade-in-up delay-500">
-            <CtaBanner />
+          <div className="mt-8 flex flex-col gap-4 animate-fade-in-up delay-500">
+            {/* Link to annuaire */}
+            <div className="flex flex-wrap gap-3">
+              <Button href="/annuaire" variant="ghost">
+                Explorer l&apos;annuaire complet →
+              </Button>
+              <Button href="/quiz" variant="ghost" onClick={() => {
+                sessionStorage.removeItem("quiz_answers")
+                localStorage.removeItem("incub_match_results")
+              }}>
+                Refaire le matching
+              </Button>
+            </div>
+
+            {/* CTA Banner */}
+            <div className="mt-4">
+              <CtaBanner />
+            </div>
           </div>
         )}
       </div>

@@ -31,7 +31,8 @@ export interface UserAnswers {
   stade: string
   secteur: string
   localisation: string
-  priorite: string
+  priorite: string // comma-separated for multi-select
+  prioriteAutre?: string
   duree: string
   equity: string
   profil: string
@@ -41,6 +42,7 @@ export interface Question {
   id: keyof UserAnswers
   question: string
   subtitle?: string
+  multiSelect?: number // max selections allowed
   options: QuestionOption[]
 }
 
