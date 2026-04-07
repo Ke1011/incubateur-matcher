@@ -15,6 +15,14 @@ export function Footer() {
         </span>
         <div className="flex gap-4 text-[13px] text-text-muted">
           <a
+            href="https://tally.so/r/xXyWYJ"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-text-secondary transition-colors"
+          >
+            Référencer un incubateur
+          </a>
+          <a
             href="https://kemil.fr/book"
             target="_blank"
             rel="noopener noreferrer"

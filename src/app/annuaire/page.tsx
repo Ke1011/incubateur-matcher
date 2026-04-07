@@ -137,6 +137,15 @@ function AnnuaireContent() {
           <p className="text-[12px] text-text-muted">
             <span className="font-semibold text-text-secondary">{filtered.length}</span> incubateurs
             {loading && " · Chargement..."}
+            {" · "}
+            <a
+              href="https://tally.so/r/xXyWYJ"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-accent-green hover:underline"
+            >
+              Vous êtes un incubateur ? Référencez-vous
+            </a>
           </p>
         </div>
       </div>
