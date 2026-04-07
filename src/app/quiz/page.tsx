@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect, useCallback } from "react"
+import Link from "next/link"
 import { useQuiz } from "@/hooks/use-quiz"
 import { useGateContext } from "@/components/gate/gate-provider"
 import { QuizShell } from "@/components/quiz/quiz-shell"
@@ -71,7 +72,28 @@ function ResultsView({ results }: { results: ScoredIncubator[] }) {
   }, [])
 
   return (
-    <div className="min-h-screen bg-bg-base px-5 py-12">
+    <div className="min-h-screen bg-bg-base">
+      {/* Navbar */}
+      <header className="flex h-14 items-center justify-between border-b border-bg-border px-5">
+        <Link href="/" className="text-sm font-bold text-text-primary">
+          incub<span className="text-accent-green">.</span>match
+        </Link>
+        <div className="flex items-center gap-3">
+          <Link href="/annuaire" className="text-[13px] font-medium text-text-secondary hover:text-text-primary transition-colors">
+            Explorer l&apos;annuaire
+          </Link>
+          <a
+            href="https://kemil.fr/book"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[13px] font-medium text-text-secondary hover:text-text-primary transition-colors hidden sm:block"
+          >
+            Me faire accompagner
+          </a>
+        </div>
+      </header>
+
+      <div className="px-5 py-12">
       <div className="mx-auto max-w-[640px]">
         {/* Header */}
         <div className="mb-8 animate-fade-in-up">
@@ -108,6 +130,7 @@ function ResultsView({ results }: { results: ScoredIncubator[] }) {
             </div>
           </div>
         )}
+      </div>
       </div>
 
       <IncubatorModal

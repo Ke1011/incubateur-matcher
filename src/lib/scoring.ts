@@ -139,7 +139,7 @@ export function scoreIncubator(inc: Incubator, answers: UserAnswers): ScoredIncu
     }
   }
 
-  const matchPercent = Math.round((score / MAX_SCORE) * 100)
+  const matchPercent = Math.min(100, Math.round((score / MAX_SCORE) * 100))
 
   return {
     ...inc,
