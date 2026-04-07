@@ -25,7 +25,7 @@ export async function POST(request: Request) {
     }
 
     const body = await request.json()
-    const { prenom, email, linkedin, profil, stade, source, quizAnswers } = body
+    const { nom, prenom, email, linkedin, profil, stade, source, quizAnswers } = body
 
     // For quiz_answers source, email can come from localStorage (may be empty)
     if (source !== "quiz_answers") {
@@ -45,6 +45,7 @@ export async function POST(request: Request) {
     }
 
     const payload: Record<string, string> = {
+      nom: sanitize(nom, 100),
       prenom: sanitize(prenom, 100),
       email: sanitize(email, 200),
       linkedin: sanitize(linkedin, 300),

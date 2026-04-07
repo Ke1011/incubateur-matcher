@@ -31,6 +31,7 @@ const STADE_OPTIONS = [
 export function EmailGate({ variant = "quiz" }: EmailGateProps) {
   const { showGate, unlock } = useGateContext()
   const [form, setForm] = useState({
+    nom: "",
     prenom: "",
     email: "",
     linkedin: "",
@@ -57,7 +58,7 @@ export function EmailGate({ variant = "quiz" }: EmailGateProps) {
 
   const profilComplete = form.profil && (form.profil !== "Autre (préciser)" || form.profilAutre)
   const stadeComplete = form.stade && (form.stade !== "Autre (préciser)" || form.stadeAutre)
-  const isValid = form.prenom && form.email.includes("@") && profilComplete && stadeComplete
+  const isValid = form.nom && form.prenom && form.email.includes("@") && profilComplete && stadeComplete
 
   const handleSubmit = useCallback(
     async (e: React.FormEvent) => {
@@ -72,6 +73,7 @@ export function EmailGate({ variant = "quiz" }: EmailGateProps) {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
+            nom: form.nom,
             prenom: form.prenom,
             email: form.email,
             linkedin: form.linkedin,
@@ -145,15 +147,25 @@ export function EmailGate({ variant = "quiz" }: EmailGateProps) {
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-3">
-          {/* Prénom */}
-          <input
-            type="text"
-            value={form.prenom}
+          {/* Nom + Prénom */}
+          <div className="flex gap-2">
+            <input
+              type="text"
+              value={form.nom}
+              onChange={(e) => setForm((f) => ({ ...f, nom: e.target.value }))}
+              placeholder="Nom"
+              required
+              className="h-11 w-full rounded-lg border-[1.5px] border-bg-border bg-bg-subtle px-4 text-[14px] text-text-primary placeholder-text-muted outline-none transition-all focus:border-accent-green focus:shadow-[0_0_0_3px_rgba(34,197,94,0.15)]"
+            />
+            <input
+              type="text"
+              value={form.prenom}
             onChange={(e) => setForm((f) => ({ ...f, prenom: e.target.value }))}
             placeholder="Prénom"
             required
             className="h-11 w-full rounded-lg border-[1.5px] border-bg-border bg-bg-subtle px-4 text-[14px] text-text-primary placeholder-text-muted outline-none transition-all focus:border-accent-green focus:shadow-[0_0_0_3px_rgba(34,197,94,0.15)]"
-          />
+            />
+          </div>
 
           {/* Email */}
           <input
