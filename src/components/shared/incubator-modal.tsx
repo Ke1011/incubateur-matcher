@@ -93,6 +93,9 @@ export function IncubatorModal({ incubator, onClose }: IncubatorModalProps) {
             {incubator.secteur && incubator.secteur !== "Généraliste" && (
               <Badge label={incubator.secteur} color="#3B82F6" />
             )}
+            {incubator.themesDetailles && incubator.themesDetailles.split(",").map((t) => t.trim()).filter(Boolean).map((theme) => (
+              <Badge key={theme} label={theme} color="#8B5CF6" />
+            ))}
           </div>
 
           {/* Description */}

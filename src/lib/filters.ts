@@ -19,7 +19,7 @@ export function filterIncubators(
     // Search (nom + ville, case-insensitive)
     if (params.search) {
       const q = params.search.toLowerCase()
-      const haystack = `${inc.nom} ${inc.ville} ${inc.alumniNotables}`.toLowerCase()
+      const haystack = `${inc.nom} ${inc.ville} ${inc.alumniNotables} ${inc.secteur} ${inc.themesDetailles} ${inc.typeStructure} ${inc.avantages.join(" ")}`.toLowerCase()
       if (!haystack.includes(q)) return false
     }
 

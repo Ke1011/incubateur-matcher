@@ -39,13 +39,14 @@ export function IncubatorRow({ incubator, isUnlocked, onUnlock, onClick }: Incub
       </div>
 
       {/* Preview info */}
-      {incubator.stadeAccepte.length > 0 && (
-        <div className="flex flex-wrap gap-1 mb-2">
-          {incubator.stadeAccepte.slice(0, 3).map((s) => (
-            <Badge key={s} label={s} color="#22C55E" />
-          ))}
-        </div>
-      )}
+      <div className="flex flex-wrap gap-1 mb-2">
+        {incubator.stadeAccepte.slice(0, 3).map((s) => (
+          <Badge key={s} label={s} color="#22C55E" />
+        ))}
+        {incubator.themesDetailles && incubator.themesDetailles.split(",").map((t) => t.trim()).filter(Boolean).slice(0, 3).map((theme) => (
+          <Badge key={theme} label={theme} color="#8B5CF6" />
+        ))}
+      </div>
 
       {/* Locked hint */}
       {!isUnlocked && (
