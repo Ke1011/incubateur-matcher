@@ -49,7 +49,7 @@ export function FilterBar({ search, onFilterChange, region, secteur, stade }: Fi
             type="text"
             value={search}
             onChange={(e) => onFilterChange("q", e.target.value)}
-            placeholder="Rechercher un incubateur..."
+            placeholder="Rechercher par nom, ville, spécialité (IA, fintech, biotech...)"
             className="h-10 w-full rounded-lg border-[1.5px] border-bg-border bg-bg-subtle pl-10 pr-4 text-[14px] text-text-primary placeholder-text-muted outline-none transition-colors focus:border-accent-green focus:shadow-[0_0_0_3px_rgba(34,197,94,0.12)]"
           />
         </div>
