@@ -7,7 +7,7 @@ export const categories: Category[] = [
     color: "#22C55E",
     gradient: "linear-gradient(160deg, #0A0A0B 0%, #0A0A0B 100%)",
     title: "Annuaire des incubateurs français",
-    subtitle: "361 programmes indexés — filtrez, comparez, candidatez.",
+    subtitle: "+550 programmes référencés — filtrez, comparez, candidatez.",
     filterKey: "",
     filterValues: [],
   },

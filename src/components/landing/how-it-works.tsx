@@ -6,7 +6,7 @@ const steps = [
   },
   {
     number: "2",
-    title: "Notre algo analyse 361 incubateurs",
+    title: "Notre algo analyse +550 incubateurs",
     description: "Score de compatibilité sur 12 critères pondérés.",
   },
   {

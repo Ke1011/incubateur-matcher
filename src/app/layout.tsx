@@ -13,12 +13,12 @@ const jakarta = Plus_Jakarta_Sans({
 export const metadata: Metadata = {
   title: "Trouve ton incubateur | incub.match",
   description:
-    "361+ incubateurs et accélérateurs en France. Quiz de matching personnalisé + annuaire complet avec filtres. Gratuit.",
+    "+550 incubateurs et accélérateurs en France. Quiz de matching personnalisé + annuaire complet avec filtres. Gratuit.",
   metadataBase: new URL("https://incubateur.kemil.fr"),
   openGraph: {
     title: "Quel incubateur pour ta startup ?",
     description:
-      "Quiz gratuit — 361 incubateurs analysés. Trouve ton match en 2 min.",
+      "Quiz gratuit — +550 incubateurs analysés. Trouve ton match en 2 min.",
     images: ["/og-image.png"],
     type: "website",
     locale: "fr_FR",
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Quel incubateur pour ta startup ?",
-    description: "Quiz gratuit — 361 incubateurs analysés.",
+    description: "Quiz gratuit — +550 incubateurs analysés.",
     images: ["/og-image.png"],
   },
   robots: { index: true, follow: true },

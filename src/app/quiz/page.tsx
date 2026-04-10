@@ -20,7 +20,7 @@ function LoadingAnimation() {
     <div className="flex min-h-screen flex-col items-center justify-center bg-bg-base px-5">
       <div className="mb-6 h-16 w-16 rounded-full border-[3px] border-bg-border border-t-accent-green animate-spin-slow" />
       <p className="text-sm text-text-secondary animate-fade-in">
-        Analyse de 361 incubateurs...
+        Analyse de +550 incubateurs...
       </p>
     </div>
   )

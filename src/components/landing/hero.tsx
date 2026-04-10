@@ -15,7 +15,7 @@ export function Hero() {
         {/* Badge */}
         <div className="animate-fade-in-up mb-6 inline-flex items-center gap-2 rounded-full border border-accent-green/15 bg-accent-green-dim px-4 py-1.5">
           <span className="text-[12px] font-semibold text-accent-green">
-            ✦ 361 incubateurs indexés dans toute la France
+            ✦ +550 incubateurs référencés dans toute la France
           </span>
         </div>
 

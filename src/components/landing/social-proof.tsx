@@ -1,5 +1,5 @@
 const stats = [
-  { value: "361", label: "incubateurs indexés" },
+  { value: "550+", label: "incubateurs référencés" },
   { value: "13", label: "régions couvertes" },
   { value: "7", label: "questions de matching" },
   { value: "2 min", label: "pour vos résultats" },
